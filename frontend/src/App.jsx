@@ -6,85 +6,88 @@ import Launch from './pages/Launch'
 import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
 
+const NAV_MAP = {
+  '/': 'home',
+  '/launch': 'launch',
+  '/dashboard': 'dashboard',
+  '/profile': 'profile',
+}
+
 function Navbar() {
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
-  const isHome = location.pathname === '/'
+
+  const segment = NAV_MAP[location.pathname] || location.pathname.split('/').filter(Boolean).join(' / ')
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors ${isHome ? 'bg-surface/80 backdrop-blur-xl' : 'bg-surface-raised/90 backdrop-blur-xl'} border-b border-border`}>
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg bg-volt/10 border border-volt/20 flex items-center justify-center group-hover:bg-volt/20 transition-colors">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-volt">
-              <path d="M9 1L3 9H8L7 15L13 7H8L9 1Z" fill="currentColor"/>
-            </svg>
-          </div>
-          <span className="text-lg font-bold text-white">Volt</span>
-        </Link>
-
-        <div className="hidden md:flex items-center gap-1">
-          <NavLink to="/" current={location.pathname}>Home</NavLink>
-          <NavLink to="/launch" current={location.pathname}>Launch Token</NavLink>
-          <NavLink to="/dashboard" current={location.pathname}>Dashboard</NavLink>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-surface border-b border-border">
+      <div className="max-w-[1200px] mx-auto px-6 h-12 flex items-center justify-between">
+        <div className="flex items-center gap-0 text-sm">
+          <Link to="/" className="text-volt font-semibold hover:text-volt-light transition-colors">
+            volt
+          </Link>
+          <span className="text-muted mx-2">/</span>
+          <span className="text-muted">{segment}</span>
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-0 text-xs">
+          <NavLink to="/" label="home" current={location.pathname} />
+          <span className="text-border-light mx-1">|</span>
+          <NavLink to="/launch" label="launch" current={location.pathname} />
+          <span className="text-border-light mx-1">|</span>
+          <NavLink to="/dashboard" label="dashboard" current={location.pathname} />
+          <span className="text-border-light mx-3">|</span>
           <Link
             to="/launch"
-            className="px-4 py-2 text-sm font-medium bg-volt text-black rounded-lg hover:bg-volt-dark transition-colors"
+            className="px-3 py-1 bg-volt text-black text-xs font-semibold hover:bg-volt-dark transition-colors"
           >
-            Launch a Token
+            LAUNCH TOKEN
           </Link>
         </div>
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-gray-400 hover:text-white p-2"
+          className="md:hidden text-muted hover:text-white text-xs"
         >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-            {mobileOpen ? (
-              <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-            ) : (
-              <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-            )}
-          </svg>
+          {mobileOpen ? '[close]' : '[menu]'}
         </button>
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden border-t border-border bg-surface-raised px-6 py-4 space-y-2">
-          <MobileNavLink to="/" onClick={() => setMobileOpen(false)}>Home</MobileNavLink>
-          <MobileNavLink to="/launch" onClick={() => setMobileOpen(false)}>Launch Token</MobileNavLink>
-          <MobileNavLink to="/dashboard" onClick={() => setMobileOpen(false)}>Dashboard</MobileNavLink>
-          <Link
-            to="/launch"
-            onClick={() => setMobileOpen(false)}
-            className="block mt-3 px-4 py-2 text-sm font-medium bg-volt text-black rounded-lg text-center"
-          >
-            Launch a Token
-          </Link>
+        <div className="md:hidden border-t border-border bg-surface px-6 py-3 space-y-1">
+          <MobileLink to="/" onClick={() => setMobileOpen(false)}>home</MobileLink>
+          <MobileLink to="/launch" onClick={() => setMobileOpen(false)}>launch</MobileLink>
+          <MobileLink to="/dashboard" onClick={() => setMobileOpen(false)}>dashboard</MobileLink>
+          <div className="pt-2">
+            <Link
+              to="/launch"
+              onClick={() => setMobileOpen(false)}
+              className="block px-3 py-2 bg-volt text-black text-xs font-semibold text-center"
+            >
+              LAUNCH TOKEN
+            </Link>
+          </div>
         </div>
       )}
     </nav>
   )
 }
 
-function NavLink({ to, current, children }) {
+function NavLink({ to, label, current }) {
   const active = current === to
   return (
     <Link
       to={to}
-      className={`px-3 py-2 text-sm rounded-md transition-colors ${active ? 'text-white bg-white/5' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+      className={`px-2 py-1 transition-colors ${active ? 'text-volt' : 'text-muted hover:text-white'}`}
     >
-      {children}
+      {label}
     </Link>
   )
 }
 
-function MobileNavLink({ to, onClick, children }) {
+function MobileLink({ to, onClick, children }) {
   return (
-    <Link to={to} onClick={onClick} className="block px-3 py-2 text-sm text-gray-300 hover:text-white rounded-md hover:bg-white/5">
+    <Link to={to} onClick={onClick} className="block px-3 py-2 text-xs text-muted hover:text-white hover:bg-white/[0.02]">
       {children}
     </Link>
   )
@@ -93,9 +96,9 @@ function MobileNavLink({ to, onClick, children }) {
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-surface text-gray-200">
+      <div className="min-h-screen bg-surface">
         <Navbar />
-        <main className="pt-16">
+        <main className="pt-12">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/repo/:id" element={<Repo />} />

@@ -5,20 +5,76 @@
   --color-volt-dark: #D4A832;
   --color-volt-light: #FFEAA0;
   --color-surface: #0A0A0F;
-  --color-surface-raised: #12121A;
-  --color-surface-overlay: #1A1A25;
-  --color-border: #2A2A35;
-  --color-border-light: #3A3A45;
-  --color-muted: #6B7280;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', monospace;
+  --color-surface-raised: #101018;
+  --color-surface-overlay: #16161F;
+  --color-border: #1E1E2A;
+  --color-border-light: #2A2A38;
+  --color-muted: #555568;
+  --color-green: #00FF88;
+  --color-red: #FF4444;
 }
 
 @layer base {
+  * {
+    border-radius: 0 !important;
+  }
+
   body {
     background-color: var(--color-surface);
-    color: #E5E7EB;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #8888A0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--color-volt);
+    color: #000;
+  }
+}
+
+@layer utilities {
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(30, 30, 42, 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30, 30, 42, 0.3) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .scanlines {
+    position: relative;
+  }
+
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.08) 2px,
+      rgba(0, 0, 0, 0.08) 4px
+    );
+    pointer-events: none;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .cursor-blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .pulse-dot {
+    animation: pulse-dot 2s ease-in-out infinite;
   }
 }
