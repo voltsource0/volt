@@ -6,11 +6,6 @@ function Home() {
       {/* Hero */}
       <section className="relative grid-bg scanlines overflow-hidden border-b border-border">
         <div className="max-w-[1200px] mx-auto px-6 pt-20 pb-16 relative">
-          <div className="text-xs text-muted mb-6">
-            <span className="text-volt pulse-dot mr-2">*</span>
-            live on solana devnet
-          </div>
-
           <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight tracking-tight mb-6">
             get paid for the<br />
             open source you build<span className="text-volt cursor-blink">_</span>
