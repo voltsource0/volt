@@ -24,14 +24,10 @@ function Navbar() {
           </div>
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
-          <a href="#" className="text-sm text-fg hover:text-accent transition-colors">Sign in</a>
-          <Link
-            to="/launch"
-            className="px-4 py-[5px] text-sm font-medium text-white bg-success-emphasis border border-white/10 rounded-md hover:bg-[#2ea043] transition-colors"
-          >
-            Connect GitHub
-          </Link>
+        <div className="hidden md:flex items-center">
+          <button className="px-4 py-[5px] text-sm font-medium text-white bg-success-emphasis border border-white/10 rounded-md hover:bg-[#2ea043] transition-colors">
+            Sign in with GitHub
+          </button>
         </div>
 
         <button
@@ -54,13 +50,12 @@ function Navbar() {
           <MobileLink to="/launch" onClick={() => setMobileOpen(false)}>Launch</MobileLink>
           <MobileLink to="/dashboard" onClick={() => setMobileOpen(false)}>Dashboard</MobileLink>
           <div className="pt-2">
-            <Link
-              to="/launch"
+            <button
               onClick={() => setMobileOpen(false)}
-              className="block px-3 py-2 text-sm font-medium text-white bg-success-emphasis border border-white/10 rounded-md text-center hover:bg-[#2ea043] transition-colors"
+              className="w-full px-3 py-2 text-sm font-medium text-white bg-success-emphasis border border-white/10 rounded-md text-center hover:bg-[#2ea043] transition-colors"
             >
-              Connect GitHub
-            </Link>
+              Sign in with GitHub
+            </button>
           </div>
         </div>
       )}
