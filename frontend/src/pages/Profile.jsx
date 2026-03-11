@@ -7,7 +7,7 @@ function Profile() {
       <div className="border border-border-default rounded-md bg-canvas-subtle p-12 text-center">
         <p className="text-sm text-fg-muted mb-5">Connect your GitHub and Solana wallet to set up your developer profile.</p>
         <button className="px-4 py-[5px] text-sm font-medium text-white bg-success-emphasis border border-white/10 rounded-md hover:bg-[#2ea043] transition-colors">
-          Sign in with GitHub
+          Connect GitHub
         </button>
       </div>
     </div>

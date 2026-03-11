@@ -26,7 +26,7 @@ function Navbar() {
 
         <div className="hidden md:flex items-center">
           <button className="px-4 py-[5px] text-sm font-medium text-white bg-success-emphasis border border-white/10 rounded-md hover:bg-[#2ea043] transition-colors">
-            Sign in with GitHub
+            Connect GitHub
           </button>
         </div>
 
@@ -54,7 +54,7 @@ function Navbar() {
               onClick={() => setMobileOpen(false)}
               className="w-full px-3 py-2 text-sm font-medium text-white bg-success-emphasis border border-white/10 rounded-md text-center hover:bg-[#2ea043] transition-colors"
             >
-              Sign in with GitHub
+              Connect GitHub
             </button>
           </div>
         </div>
