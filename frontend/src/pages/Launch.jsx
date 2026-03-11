@@ -5,11 +5,31 @@ function Launch() {
   const [repoUrl, setRepoUrl] = useState('')
   const [tokenName, setTokenName] = useState('')
   const [ticker, setTicker] = useState('')
-  const [description, setDescription] = useState('')
+  const [repoDescription, setRepoDescription] = useState('')
+  const [repoLoading, setRepoLoading] = useState(false)
   const [launched, setLaunched] = useState(false)
 
   const repoName = repoUrl.replace(/^https?:\/\/(www\.)?github\.com\//, '').replace(/\.git$/, '').replace(/\/$/, '')
   const isValid = repoUrl && tokenName && ticker && ticker.length >= 2
+
+  function handleRepoBlur() {
+    const parts = repoName.split('/')
+    if (parts.length !== 2 || !parts[0] || !parts[1]) {
+      setRepoDescription('')
+      return
+    }
+    setRepoLoading(true)
+    fetch(`https://api.github.com/repos/${repoName}`)
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        setRepoDescription(data?.description || '')
+        setRepoLoading(false)
+      })
+      .catch(() => {
+        setRepoDescription('')
+        setRepoLoading(false)
+      })
+  }
 
   function handleTickerChange(e) {
     const val = e.target.value.replace(/[^a-zA-Z]/g, '').toUpperCase().slice(0, 6)
@@ -60,8 +80,11 @@ function Launch() {
               placeholder="https://github.com/owner/repo"
               value={repoUrl}
               onChange={(e) => setRepoUrl(e.target.value)}
+              onBlur={handleRepoBlur}
               className="w-full px-3 py-[5px] bg-canvas border border-border-default rounded-md text-sm text-fg placeholder-fg-subtle focus:outline-none focus:border-[#388bfd] focus:shadow-[0_0_0_3px_rgba(56,139,253,0.3)] transition-colors"
             />
+            {repoLoading && <p className="text-xs text-fg-subtle mt-1">Fetching repo info...</p>}
+            {repoDescription && !repoLoading && <p className="text-xs text-fg-muted mt-1">{repoDescription}</p>}
           </Field>
 
           <Field label="Token name" hint="The display name for your token">
@@ -89,17 +112,6 @@ function Launch() {
             </div>
           </Field>
 
-          <Field label="Description" hint="Brief description of your project (optional)">
-            <textarea
-              placeholder="What does your project do?"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={3}
-              maxLength={280}
-              className="w-full px-3 py-[5px] bg-canvas border border-border-default rounded-md text-sm text-fg placeholder-fg-subtle focus:outline-none focus:border-[#388bfd] focus:shadow-[0_0_0_3px_rgba(56,139,253,0.3)] transition-colors resize-none"
-            />
-          </Field>
-
           <div className="pt-2">
             <button
               type="submit"
@@ -125,7 +137,7 @@ function Launch() {
                 </span>
               </div>
               <p className="text-sm text-fg-muted mb-3">
-                {description || 'Your project description will appear here.'}
+                {repoDescription || 'Repository description will be fetched from GitHub.'}
               </p>
               <div className="flex items-center gap-3 text-xs text-fg-subtle mb-4">
                 {ticker && (
