@@ -11,12 +11,12 @@ const MOCK_REPOS = {
 }
 
 const MOCK_TRADES = [
-  { type: 'BUY', amount: '2,400 NEXT', price: '$0.0851', wallet: '7xKXt...9mPq', time: '14:32:01' },
-  { type: 'SELL', amount: '1,200 NEXT', price: '$0.0844', wallet: '9pQxt...2nRs', time: '14:21:17' },
-  { type: 'BUY', amount: '5,000 NEXT', price: '$0.0840', wallet: '5mKxt...7jWp', time: '14:15:03' },
-  { type: 'BUY', amount: '950 NEXT', price: '$0.0838', wallet: '2nLxt...8hTq', time: '14:09:22' },
-  { type: 'SELL', amount: '3,100 NEXT', price: '$0.0835', wallet: '8kPxt...3mNr', time: '14:01:56' },
-  { type: 'BUY', amount: '1,600 NEXT', price: '$0.0830', wallet: '4jRxt...6pKm', time: '13:48:11' },
+  { type: 'Buy', amount: '2,400', price: '$0.0851', wallet: '7xKXt...9mPq', time: '2 min ago' },
+  { type: 'Sell', amount: '1,200', price: '$0.0844', wallet: '9pQxt...2nRs', time: '12 min ago' },
+  { type: 'Buy', amount: '5,000', price: '$0.0840', wallet: '5mKxt...7jWp', time: '18 min ago' },
+  { type: 'Buy', amount: '950', price: '$0.0838', wallet: '2nLxt...8hTq', time: '24 min ago' },
+  { type: 'Sell', amount: '3,100', price: '$0.0835', wallet: '8kPxt...3mNr', time: '31 min ago' },
+  { type: 'Buy', amount: '1,600', price: '$0.0830', wallet: '4jRxt...6pKm', time: '45 min ago' },
 ]
 
 function Repo() {
@@ -26,220 +26,190 @@ function Repo() {
 
   if (!data) {
     return (
-      <div className="max-w-[1200px] mx-auto px-6 py-24">
-        <div className="text-xs text-muted uppercase tracking-wider mb-3">// error</div>
-        <h1 className="text-xl font-bold text-white mb-2">token not found</h1>
-        <p className="text-xs text-muted mb-6">this repo token doesn't exist yet.</p>
-        <Link to="/" className="text-volt text-xs hover:text-volt-light transition-colors">&lt;- back to home</Link>
+      <div className="max-w-[1280px] mx-auto px-6 py-16">
+        <h1 className="text-2xl font-semibold text-fg mb-2">Token not found</h1>
+        <p className="text-sm text-fg-muted mb-4">This repo token doesn't exist yet.</p>
+        <Link to="/" className="text-sm text-accent hover:underline">&larr; Back to home</Link>
       </div>
     )
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto px-6 py-8 space-y-6">
+    <div className="max-w-[1280px] mx-auto px-6 py-8 space-y-6">
 
-      {/* TOP SECTION — two columns */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6">
-
-        {/* Left — token identity */}
-        <div className="border border-[#2A2A35]">
-          <div className="px-5 py-3 border-b border-[#2A2A35] bg-surface-raised">
-            <span className="text-[10px] text-muted uppercase tracking-widest">TOKEN</span>
+      {/* Top section */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6">
+        {/* Left — identity */}
+        <div className="border border-border-default rounded-md bg-canvas-subtle p-5">
+          <div className="flex items-center gap-3 mb-2 flex-wrap">
+            <h1 className="text-2xl font-semibold text-fg">{data.name}</h1>
+            <span className="text-base font-semibold text-accent mono">${data.ticker}</span>
+            {data.verified ? (
+              <span className="px-[7px] py-px text-xs font-medium text-success border border-success/30 rounded-2xl">Verified</span>
+            ) : (
+              <span className="px-[7px] py-px text-xs font-medium text-fg-subtle border border-border-default rounded-2xl">Unverified</span>
+            )}
           </div>
-          <div className="p-5">
-            <div className="flex items-center gap-3 mb-3">
-              <h1 className="text-2xl font-bold text-white">{data.name}</h1>
-              <span className="text-xl font-bold text-volt">${data.ticker}</span>
-              {data.verified ? (
-                <span className="px-2 py-0.5 border border-green/30 bg-green/5 text-green text-[10px] font-semibold uppercase tracking-wider">
-                  VERIFIED
-                </span>
-              ) : (
-                <span className="px-2 py-0.5 border border-muted/30 bg-muted/5 text-muted text-[10px] font-semibold uppercase tracking-wider">
-                  UNVERIFIED
-                </span>
-              )}
-            </div>
-            <a
-              href={`https://github.com/${data.repo}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs text-muted hover:text-volt transition-colors"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-              </svg>
-              {data.repo}
-            </a>
-          </div>
+          <a href={`https://github.com/${data.repo}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-accent hover:underline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-fg-muted">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            {data.repo}
+          </a>
         </div>
 
-        {/* Right — price & buy/sell */}
-        <div className="border border-[#2A2A35]">
-          <div className="px-5 py-3 border-b border-[#2A2A35] bg-surface-raised flex items-center justify-between">
-            <span className="text-[10px] text-muted uppercase tracking-widest">PRICE</span>
-            <span className={`text-xs font-semibold ${data.change >= 0 ? 'text-green' : 'text-red'}`}>
-              {data.change >= 0 ? '+' : ''}{data.change}% 24H
+        {/* Right — price & actions */}
+        <div className="border border-border-default rounded-md bg-canvas-subtle p-5">
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-xs text-fg-subtle">Current price</span>
+            <span className={`text-xs font-medium ${data.change >= 0 ? 'text-success' : 'text-danger'}`}>
+              {data.change >= 0 ? '+' : ''}{data.change}% 24h
             </span>
           </div>
-          <div className="p-5">
-            <div className="text-3xl font-bold text-volt mb-6">${data.price.toFixed(4)}</div>
-            <button
-              onClick={() => setShowModal(true)}
-              className="w-full py-3 bg-volt text-black text-xs font-bold hover:bg-volt-dark transition-colors uppercase tracking-wider mb-2"
-            >
-              BUY ${data.ticker}
-            </button>
-            <button
-              onClick={() => setShowModal(true)}
-              className="w-full py-3 border border-[#2A2A35] text-muted text-xs font-semibold hover:text-white hover:border-border-light transition-colors uppercase tracking-wider"
-            >
-              SELL ${data.ticker}
-            </button>
+          <div className="text-3xl font-semibold text-fg mono mb-5">${data.price.toFixed(4)}</div>
+          <button
+            onClick={() => setShowModal(true)}
+            className="w-full py-[5px] text-sm font-medium text-white bg-success-emphasis border border-white/10 rounded-md hover:bg-[#2ea043] transition-colors mb-2"
+          >
+            Buy ${data.ticker}
+          </button>
+          <button
+            onClick={() => setShowModal(true)}
+            className="w-full py-[5px] text-sm font-medium text-fg bg-canvas-subtle border border-border-default rounded-md hover:border-fg-subtle transition-colors"
+          >
+            Sell ${data.ticker}
+          </button>
+        </div>
+      </div>
+
+      {/* Middle — chart & stats */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6">
+        {/* Chart */}
+        <div className="border border-border-default rounded-md bg-canvas-subtle p-5">
+          <p className="text-xs text-fg-subtle font-semibold mb-4">Price chart</p>
+          <div className="w-full h-48 flex items-end relative">
+            <svg viewBox="0 0 400 120" className="w-full h-full" preserveAspectRatio="none">
+              <polyline
+                points="0,100 30,95 60,88 90,92 120,70 150,65 180,72 210,55 240,48 270,52 300,35 330,40 360,28 390,20 400,22"
+                fill="none"
+                stroke="#3fb950"
+                strokeWidth="2"
+              />
+              <polyline
+                points="0,100 30,95 60,88 90,92 120,70 150,65 180,72 210,55 240,48 270,52 300,35 330,40 360,28 390,20 400,22 400,120 0,120"
+                fill="url(#chartGrad)"
+                stroke="none"
+              />
+              <defs>
+                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#3fb950" stopOpacity="0.12" />
+                  <stop offset="100%" stopColor="#3fb950" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-border-muted" />
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="border border-border-default rounded-md bg-canvas-subtle">
+          <p className="text-xs text-fg-subtle font-semibold px-5 pt-4 pb-3">Token stats</p>
+          <div className="grid grid-cols-2">
+            <StatCell label="Market cap" value={data.marketCap} />
+            <StatCell label="Total supply" value={data.totalSupply} border />
+          </div>
+          <div className="grid grid-cols-2 border-t border-border-muted">
+            <StatCell label="Holders" value={data.holders} />
+            <StatCell label="24h volume" value={data.volume24h} border />
           </div>
         </div>
       </div>
 
-      {/* MIDDLE SECTION — chart & stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6">
-
-        {/* Left — price chart placeholder */}
-        <div className="border border-[#2A2A35]">
-          <div className="px-5 py-3 border-b border-[#2A2A35] bg-surface-raised">
-            <span className="text-[10px] text-muted uppercase tracking-widest">PRICE CHART</span>
+      {/* Creator fees */}
+      <div className="border border-border-default rounded-md bg-canvas-subtle p-5">
+        <p className="text-xs text-fg-subtle font-semibold mb-4">Creator fees</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-5">
+          <div>
+            <p className="text-xs text-fg-subtle mb-1">Fee wallet</p>
+            <p className="text-sm text-fg mono">{data.feeWallet}</p>
           </div>
-          <div className="p-5">
-            <div className="w-full h-48 flex items-end justify-center relative">
-              {/* Mock SVG chart line */}
-              <svg viewBox="0 0 400 120" className="w-full h-full" preserveAspectRatio="none">
-                <polyline
-                  points="0,100 30,95 60,88 90,92 120,70 150,65 180,72 210,55 240,48 270,52 300,35 330,40 360,28 390,20 400,22"
-                  fill="none"
-                  stroke="#F5C542"
-                  strokeWidth="2"
-                />
-                <polyline
-                  points="0,100 30,95 60,88 90,92 120,70 150,65 180,72 210,55 240,48 270,52 300,35 330,40 360,28 390,20 400,22 400,120 0,120"
-                  fill="url(#chartGrad)"
-                  stroke="none"
-                />
-                <defs>
-                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#F5C542" stopOpacity="0.15" />
-                    <stop offset="100%" stopColor="#F5C542" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div className="absolute bottom-0 left-0 right-0 h-px bg-[#2A2A35]" />
-            </div>
+          <div>
+            <p className="text-xs text-fg-subtle mb-1">Total earned</p>
+            <p className="text-xl font-semibold text-success">{data.totalFees}</p>
+          </div>
+          <div>
+            <p className="text-xs text-fg-subtle mb-1">Unclaimed</p>
+            <p className="text-xl font-semibold text-fg">{data.unclaimedFees}</p>
           </div>
         </div>
 
-        {/* Right — token stats grid */}
-        <div className="border border-[#2A2A35]">
-          <div className="px-5 py-3 border-b border-[#2A2A35] bg-surface-raised">
-            <span className="text-[10px] text-muted uppercase tracking-widest">TOKEN STATS</span>
-          </div>
-          <div className="grid grid-cols-2 divide-x divide-[#2A2A35]">
-            <StatCell label="MARKET CAP" value={data.marketCap} />
-            <StatCell label="TOTAL SUPPLY" value={data.totalSupply} />
-          </div>
-          <div className="grid grid-cols-2 divide-x divide-[#2A2A35] border-t border-[#2A2A35]">
-            <StatCell label="HOLDERS" value={data.holders} />
-            <StatCell label="24H VOLUME" value={data.volume24h} />
-          </div>
-        </div>
-      </div>
+        <button className="px-4 py-[5px] text-sm font-medium text-fg bg-canvas-subtle border border-border-default rounded-md hover:border-fg-subtle transition-colors mb-4">
+          Claim fees
+        </button>
 
-      {/* CREATOR FEES — full width */}
-      <div className="border border-[#2A2A35]">
-        <div className="px-5 py-3 border-b border-[#2A2A35] bg-surface-raised">
-          <span className="text-[10px] text-muted uppercase tracking-widest">CREATOR FEES</span>
-        </div>
-        <div className="p-5">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        {!data.verified && (
+          <div className="border border-attention/30 bg-attention/5 rounded-md p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div>
-              <div className="text-[10px] text-muted uppercase tracking-widest mb-1">FEE WALLET</div>
-              <div className="text-xs text-white">{data.feeWallet}</div>
+              <p className="text-sm font-semibold text-fg mb-0.5">Unverified</p>
+              <p className="text-xs text-fg-muted">This repo has unclaimed fees. Are you the maintainer?</p>
             </div>
-            <div>
-              <div className="text-[10px] text-muted uppercase tracking-widest mb-1">TOTAL EARNED</div>
-              <div className="text-xl font-bold text-volt">{data.totalFees}</div>
-            </div>
-            <div>
-              <div className="text-[10px] text-muted uppercase tracking-widest mb-1">UNCLAIMED</div>
-              <div className="text-xl font-bold text-white">{data.unclaimedFees}</div>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-3 mb-6">
-            <button className="px-5 py-2.5 border border-volt text-volt text-xs font-semibold hover:bg-volt hover:text-black transition-colors uppercase tracking-wider">
-              CLAIM FEES
+            <button className="px-4 py-[5px] text-sm font-medium text-white bg-success-emphasis border border-white/10 rounded-md hover:bg-[#2ea043] transition-colors shrink-0">
+              Verify ownership
             </button>
           </div>
+        )}
+      </div>
 
-          {!data.verified && (
-            <div className="border border-[#2A2A35] bg-surface-raised p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
-                <div className="text-xs text-white font-semibold mb-1">UNVERIFIED</div>
-                <div className="text-[11px] text-muted">This repo has unclaimed fees. Are you the maintainer?</div>
+      {/* Trade history */}
+      <div className="border border-border-default rounded-md bg-canvas-subtle overflow-hidden">
+        <div className="px-5 py-3 flex items-center justify-between">
+          <p className="text-xs text-fg-subtle font-semibold">Trade history</p>
+          <p className="text-xs text-fg-subtle">{MOCK_TRADES.length} trades</p>
+        </div>
+
+        <div className="border-t border-border-muted">
+          <div className="grid grid-cols-[70px_1fr_1fr_1fr_100px] bg-canvas-inset border-b border-border-muted">
+            <TH>Type</TH>
+            <TH right>Amount</TH>
+            <TH right>Price</TH>
+            <TH right>Wallet</TH>
+            <TH right>Time</TH>
+          </div>
+
+          {MOCK_TRADES.map((trade, i) => (
+            <div key={i} className="grid grid-cols-[70px_1fr_1fr_1fr_100px] border-b border-border-muted last:border-b-0 hover:bg-white/[0.02] transition-colors">
+              <div className="px-5 py-2.5">
+                <span className={`text-xs font-medium ${trade.type === 'Buy' ? 'text-success' : 'text-danger'}`}>
+                  {trade.type}
+                </span>
               </div>
-              <button className="px-5 py-2.5 bg-volt text-black text-xs font-bold hover:bg-volt-dark transition-colors uppercase tracking-wider shrink-0">
-                VERIFY OWNERSHIP
-              </button>
+              <div className="px-5 py-2.5 text-sm text-fg text-right mono">{trade.amount}</div>
+              <div className="px-5 py-2.5 text-sm text-fg text-right mono">{trade.price}</div>
+              <div className="px-5 py-2.5 text-sm text-fg-muted text-right mono">{trade.wallet}</div>
+              <div className="px-5 py-2.5 text-xs text-fg-subtle text-right">{trade.time}</div>
             </div>
-          )}
+          ))}
         </div>
       </div>
 
-      {/* TRADE HISTORY — full width */}
-      <div className="border border-[#2A2A35]">
-        <div className="px-5 py-3 border-b border-[#2A2A35] bg-surface-raised flex items-center justify-between">
-          <span className="text-[10px] text-muted uppercase tracking-widest">TRADE HISTORY</span>
-          <span className="text-[10px] text-muted">{MOCK_TRADES.length} trades</span>
-        </div>
-
-        {/* Table header */}
-        <div className="grid grid-cols-[70px_1fr_1fr_1fr_90px] bg-surface-raised border-b border-[#2A2A35]">
-          <div className="px-5 py-2.5 text-[10px] text-muted uppercase tracking-widest">TYPE</div>
-          <div className="px-5 py-2.5 text-[10px] text-muted uppercase tracking-widest text-right">AMOUNT</div>
-          <div className="px-5 py-2.5 text-[10px] text-muted uppercase tracking-widest text-right">PRICE</div>
-          <div className="px-5 py-2.5 text-[10px] text-muted uppercase tracking-widest text-right">WALLET</div>
-          <div className="px-5 py-2.5 text-[10px] text-muted uppercase tracking-widest text-right">TIME</div>
-        </div>
-
-        {/* Rows */}
-        {MOCK_TRADES.map((trade, i) => (
-          <div key={i} className="grid grid-cols-[70px_1fr_1fr_1fr_90px] border-b border-[#2A2A35] last:border-b-0 hover:bg-white/[0.01] transition-colors">
-            <div className="px-5 py-3">
-              <span className={`text-[11px] font-bold ${trade.type === 'BUY' ? 'text-green' : 'text-red'}`}>
-                {trade.type}
-              </span>
-            </div>
-            <div className="px-5 py-3 text-xs text-white text-right">{trade.amount}</div>
-            <div className="px-5 py-3 text-xs text-white text-right">{trade.price}</div>
-            <div className="px-5 py-3 text-xs text-muted text-right">{trade.wallet}</div>
-            <div className="px-5 py-3 text-xs text-muted text-right">{trade.time}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Wallet Modal */}
+      {/* Wallet modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/70" onClick={() => setShowModal(false)} />
-          <div className="relative w-full max-w-sm border border-[#2A2A35] bg-surface-raised">
-            <div className="px-5 py-3 border-b border-[#2A2A35] flex items-center justify-between">
-              <span className="text-[10px] text-muted uppercase tracking-widest">CONNECT WALLET</span>
-              <button onClick={() => setShowModal(false)} className="text-muted hover:text-white text-xs">[x]</button>
-            </div>
-            <div className="p-6">
-              <p className="text-xs text-muted mb-6">connect a solana wallet to buy and sell repo tokens.</p>
-              <button className="w-full py-3 bg-volt text-black text-xs font-bold hover:bg-volt-dark transition-colors uppercase tracking-wider mb-2">
-                CONNECT PHANTOM
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowModal(false)} />
+          <div className="relative w-full max-w-sm border border-border-default rounded-md bg-canvas-overlay shadow-lg">
+            <div className="px-5 py-3 border-b border-border-muted flex items-center justify-between">
+              <span className="text-sm font-semibold text-fg">Connect wallet</span>
+              <button onClick={() => setShowModal(false)} className="text-fg-muted hover:text-fg">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" strokeLinecap="round"/></svg>
               </button>
-              <button onClick={() => setShowModal(false)} className="w-full py-3 border border-[#2A2A35] text-xs text-muted hover:text-white hover:border-border-light transition-colors uppercase tracking-wider">
-                CANCEL
+            </div>
+            <div className="p-5">
+              <p className="text-sm text-fg-muted mb-5">Connect a Solana wallet to buy and sell repo tokens.</p>
+              <button className="w-full py-[5px] text-sm font-medium text-white bg-success-emphasis border border-white/10 rounded-md hover:bg-[#2ea043] transition-colors mb-2">
+                Connect Phantom
+              </button>
+              <button onClick={() => setShowModal(false)} className="w-full py-[5px] text-sm font-medium text-fg bg-canvas-subtle border border-border-default rounded-md hover:border-fg-subtle transition-colors">
+                Cancel
               </button>
             </div>
           </div>
@@ -249,11 +219,19 @@ function Repo() {
   )
 }
 
-function StatCell({ label, value }) {
+function StatCell({ label, value, border }) {
   return (
-    <div className="px-5 py-4">
-      <div className="text-[10px] text-muted uppercase tracking-widest mb-1">{label}</div>
-      <div className="text-sm font-bold text-white">{value}</div>
+    <div className={`px-5 py-3 ${border ? 'border-l border-border-muted' : ''}`}>
+      <p className="text-xs text-fg-subtle mb-0.5">{label}</p>
+      <p className="text-sm font-semibold text-fg">{value}</p>
+    </div>
+  )
+}
+
+function TH({ children, right }) {
+  return (
+    <div className={`px-5 py-2 text-xs font-medium text-fg-subtle ${right ? 'text-right' : ''}`}>
+      {children}
     </div>
   )
 }

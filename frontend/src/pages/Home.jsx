@@ -4,69 +4,61 @@ function Home() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative grid-bg scanlines overflow-hidden border-b border-border">
-        <div className="max-w-[1200px] mx-auto px-6 pt-20 pb-16 relative">
-          <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight tracking-tight mb-6">
-            get paid for the<br />
-            open source you build<span className="text-volt cursor-blink">_</span>
+      <section className="border-b border-border-muted">
+        <div className="max-w-[1280px] mx-auto px-6 pt-16 pb-14">
+          <h1 className="text-[40px] font-semibold text-fg leading-tight mb-4">
+            Get paid for the open source you build
           </h1>
-
-          <p className="text-sm md:text-base text-muted max-w-lg mb-10 leading-relaxed">
-            connect your github repo. get a tradeable token.<br />
-            earn 2% creator fees on every trade, forever.
+          <p className="text-xl text-fg-muted max-w-2xl mb-8 leading-relaxed">
+            GitFunding connects your GitHub repos to on-chain funding. Every trade earns you fees. No gatekeepers.
           </p>
-
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap items-center gap-4">
             <Link
               to="/launch"
-              className="px-5 py-2.5 bg-volt text-black text-xs font-semibold hover:bg-volt-dark transition-colors uppercase tracking-wider"
+              className="px-4 py-[5px] text-sm font-medium text-white bg-success-emphasis border border-white/10 rounded-md hover:bg-[#2ea043] transition-colors"
             >
-              Launch a Token
+              Launch your repo
+            </Link>
+            <Link to="/dashboard" className="text-sm text-accent hover:underline">
+              Browse funded repos &rarr;
             </Link>
           </div>
         </div>
       </section>
 
       {/* Steps */}
-      <section className="max-w-[1200px] mx-auto px-6 py-20 border-b border-border">
-        <div className="relative">
-          <div className="hidden md:block absolute top-4 left-0 right-0 h-px bg-border" />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            <Step
-              num="01"
-              title="connect your repo"
-              desc="sign in with github. select any repo you own. we verify ownership automatically."
-            />
-            <Step
-              num="02"
-              title="token is minted"
-              desc="an SPL token is created on solana with a bonding curve. anyone can buy or sell."
-            />
-            <Step
-              num="03"
-              title="earn 2% forever"
-              desc="every trade generates a 2% creator fee sent directly to your wallet. no caps."
-            />
-          </div>
+      <section className="max-w-[1280px] mx-auto px-6 py-16 border-b border-border-muted">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Step
+            num="1"
+            title="Connect your repo"
+            desc="Sign in with GitHub and select any repo you own. We verify ownership automatically."
+          />
+          <Step
+            num="2"
+            title="Token is minted"
+            desc="An SPL token is created on Solana with a bonding curve. Anyone can buy or sell it."
+          />
+          <Step
+            num="3"
+            title="Earn 2% forever"
+            desc="Every trade generates a 2% creator fee sent directly to your wallet. No caps, no limits."
+          />
         </div>
       </section>
 
       {/* Footer */}
-      <footer>
-        <div className="max-w-[1200px] mx-auto px-6 py-8">
+      <footer className="border-t border-border-muted">
+        <div className="max-w-[1280px] mx-auto px-6 py-10">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="text-xs">
-              <span className="text-volt font-semibold">volt</span>
-              <span className="text-muted ml-2">// open source funding protocol</span>
+            <div className="text-xs text-fg-muted">
+              &copy; 2025 GitFunding
             </div>
-            <div className="flex gap-6 text-xs text-muted">
-              <a href="#" className="hover:text-white transition-colors">docs</a>
-              <a href="#" className="hover:text-white transition-colors">github</a>
-              <a href="#" className="hover:text-white transition-colors">twitter</a>
-              <a href="#" className="hover:text-white transition-colors">discord</a>
+            <div className="flex gap-6 text-xs text-fg-muted">
+              <a href="#" className="hover:text-accent transition-colors">Terms</a>
+              <a href="#" className="hover:text-accent transition-colors">Privacy</a>
+              <a href="#" className="hover:text-accent transition-colors">GitHub</a>
             </div>
-            <div className="text-xs text-border-light">solana mainnet</div>
           </div>
         </div>
       </footer>
@@ -76,14 +68,10 @@ function Home() {
 
 function Step({ num, title, desc }) {
   return (
-    <div className="relative">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-8 h-8 border border-volt bg-volt/10 flex items-center justify-center text-volt text-xs font-bold shrink-0 relative z-10">
-          {num}
-        </div>
-        <div className="text-sm font-semibold text-white">{title}</div>
-      </div>
-      <p className="text-xs text-muted leading-relaxed pl-11">{desc}</p>
+    <div className="p-4 bg-canvas-subtle border border-border-default rounded-md">
+      <div className="mono text-fg-muted text-xs mb-3">{num}</div>
+      <h3 className="text-base font-semibold text-fg mb-2">{title}</h3>
+      <p className="text-sm text-fg-muted leading-relaxed">{desc}</p>
     </div>
   )
 }
